@@ -8,7 +8,7 @@ WORKDIR /var/www/html
 RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf && \
     sed -i 's/<VirtualHost \*:80>/<VirtualHost *:8080>/' /etc/apache2/sites-available/000-default.conf
 
-# --- OpenShift Permissions Fix ---
+
 # Create a directory where PHP will attempt to write.
 # Change its group ownership to root (GID 0).
 # Make it group-writable (g+w) and readable/executable (g+rx).
@@ -17,7 +17,6 @@ RUN mkdir -p /var/www/html/writable_test && \
     chgrp -R 0 /var/www/html/writable_test && \
     chmod -R g+rwx /var/www/html/writable_test && \
     chmod g+s /var/www/html/writable_test
-# --- End OpenShift Permissions Fix ---
 
 # Simple PHP script to test file writing and show info
 COPY index.php /var/www/html/index.php
